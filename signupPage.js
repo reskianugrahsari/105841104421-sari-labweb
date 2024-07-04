@@ -1,6 +1,7 @@
-import { StyleSheet, View, Text, TextInput, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Image,  } from 'react-native';
 import React from 'react';
 import { useFonts } from 'expo-font';
+import { useNavigation } from '@react-navigation/native';
 
 const ButtonCustom = ({ text, color }) => {
     return (
@@ -44,7 +45,7 @@ const TextInputCustom = ({ placeholder, typekeyboard }) => {
     )
 }
 
-const App = () => {
+const App = ({navigation}) => {
     const[dapatFont]=useFonts({
         'MetroBold':require('./assets/fonts/Metropolis-Bold.otf'),
         'MetroMedium':require('./assets/fonts/Metropolis-Medium.otf'),
@@ -58,9 +59,9 @@ const App = () => {
                     <TextInputCustom placeholder="Email" typekeyboard="email-address" />
                     <TextInputCustom placeholder="Password" typekeyboard="default" />
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 }}>
-                        <Text style={{ fontSize: 16, textAlign:'center',fontFamily:'MetroMedium',marginLeft:130 }}>Already have an account?</Text>
+                        <Text style={styles.Logintext}onPress={()=> navigation.navigate('Login')}>Already have an account?Login</Text>
                     </View>
-                    <ButtonCustom text="SIGN UP" color="red" />
+                    <ButtonCustom text="SIGN UP" color="red"onPress={() => navigation.navigate('Login')} />
                 </View>
             </View>
             <Text style={{ fontSize: 16,textAlign:'center',fontFamily:'MetroMedium' }}>Or sign up with social account</Text>
@@ -116,4 +117,13 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
     },
+    Logintext:{
+        fontSize: 12,
+        textAlign:'flex-end',
+        marginLeft:130,
+        fontFamily:'MetroMedium',
+        // color:'red'
+    },
+
+
 });

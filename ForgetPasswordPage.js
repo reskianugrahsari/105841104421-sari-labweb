@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, TextInput, Image } from 'react-native';
 import React from 'react';
 import { useFonts } from 'expo-font';
 
+
 const ButtonCustom = ({ text, color }) => {
     return (
         <View style={{
