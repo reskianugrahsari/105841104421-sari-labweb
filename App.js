@@ -1,107 +1,148 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import ImageSlider from 'react-native-image-slider';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { Icon } from 'react-native-elements';
 
-const App = () => {
-  const images = [
-    require('./assets/bucket.jpg'),
-    require('./assets/bucket1.jpg'),
-    require('./assets/bucket2.jpg'),
-    require('./assets/bucket3.jpg'),
-    require('./assets/bucket.jpg'),
-    require('./assets/bucket1.jpg'),
-    require('./assets/bucket3.jpg'),
-  ];
+const DATA = [
+    {
+        id: '1',
+        title: 'T-Shirt SPANISH',
+        price: '9$',
+        image: 'https://via.placeholder.com/150',
+        rating: 3,
+        brand: 'Mango',
+    },
+    {
+        id: '2',
+        title: 'Blouse',
+        price: '14$',
+        oldPrice: '21$',
+        discount: '-20%',
+        image: 'https://via.placeholder.com/150',
+        rating: 4,
+        brand: 'Dorothy Perkins',
+    },
+    {
+        id: '3',
+        title: 'Shirt',
+        price: '9$',
+        image: 'https://via.placeholder.com/150',
+        rating: 1,
+        brand: 'Mango',
+    },
+    {
+        id: '4',
+        title: 'Light Blouse',
+        price: '14$',
+        oldPrice: '21$',
+        discount: '-20%',
+        image: 'https://via.placeholder.com/150',
+        rating: 4,
+        brand: 'Dorothy Perkins',
+    },
+];
 
-  return (
-    <ScrollView style={styles.container}>
-      <View style={styles.sliderContainer}>
-        <ImageSlider images={images} autoPlayWithInterval={3000} loop />
-      </View>
-      <View style={styles.saleBanner}>
-        <Text style={styles.saleText}>Flower sale</Text>
-        <TouchableOpacity style={styles.checkButton}>
-          <Text style={styles.checkButtonText}>Check</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.newSection}>
-        <Text style={styles.newTitle}>New</Text>
-        <Text style={styles.newSubtitle}>You've never seen it before!</Text>
-        <ImageSlider
-          images={images}
-          customSlide={({ index, item, style, width }) => (
-            <View key={index} style={[style, styles.customSlide]}>
-              <Image source={item} style={styles.newItemImage} />
-              <Text style={styles.newItemText}>New Item {index + 1}</Text>
+const ProductItem = ({ item }) => (
+    <View style={styles.productItem}>
+        <Image source={{ uri: item.image }} style={styles.productImage} />
+        {item.discount && (
+            <View style={styles.discountBadge}>
+                <Text style={styles.discountText}>{item.discount}</Text>
             </View>
-          )}
-          style={styles.newItemsSlider}
-          autoPlayWithInterval={3000}
-          loop
-        />
-      </View>
-    </ScrollView>
-  );
-};
+        )}
+        <Text style={styles.productTitle}>{item.title}</Text>
+        <Text style={styles.productBrand}>{item.brand}</Text>
+        <View style={styles.ratingContainer}>
+            {[...Array(5)].map((_, i) => (
+                <Icon
+                    key={i}
+                    name="star"
+                    type="font-awesome"
+                    size={12}
+                    color={i < item.rating ? '#ffd700' : '#ccc'}
+                />
+            ))}
+        </View>
+        <View style={styles.priceContainer}>
+            {item.oldPrice && <Text style={styles.oldPrice}>{item.oldPrice}</Text>}
+            <Text style={styles.productPrice}>{item.price}</Text>
+        </View>
+    </View>
+);
+
+export default function visual() {
+    return (
+        <View style={styles.container}>
+            <FlatList
+                data={DATA}
+                renderItem={({ item }) => <ProductItem item={item} />}
+                keyExtractor={item => item.id}
+                numColumns={2}
+                contentContainerStyle={styles.productList}
+            />
+        </View>
+    );
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  sliderContainer: {
-    height: 310,
-  },
-  saleBanner: {
-    alignItems: 'center',
-    marginTop: -40,
-  },
-  saleText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  checkButton: {
-    marginTop: 10,
-    backgroundColor: '#ff0000',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-  },
-  checkButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  newSection: {
-    padding: 20,
-  },
-  newTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  newSubtitle: {
-    fontSize: 16,
-    color: '#888',
-    marginVertical: 5,
-  },
-  newItemsSlider: {
-    height: 200,
-  },
-  customSlide: {
-    alignItems: 'center',
-    width: 143,
-    marginRight: 10,
-  },
-  newItemImage: {
-    width: 150,
-    height: 150,
-    resizeMode: 'cover',
-  },
-  newItemText: {
-    marginTop: 10,
-    fontSize: 14,
-    textAlign: 'center',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: 10,
+    },
+    productList: {
+        justifyContent: 'space-between',
+    },
+    productItem: {
+        flex: 1,
+        margin: 5,
+        padding: 10,
+        backgroundColor: '#f9f9f9',
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    productImage: {
+        width: 120,
+        height: 120,
+        borderRadius: 8,
+        marginBottom: 10,
+    },
+    discountBadge: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        backgroundColor: '#f00',
+        padding: 5,
+        borderRadius: 5,
+    },
+    discountText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+    productTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    productBrand: {
+        fontSize: 12,
+        color: '#777',
+        marginBottom: 5,
+    },
+    ratingContainer: {
+        flexDirection: 'row',
+        marginBottom: 5,
+    },
+    priceContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    oldPrice: {
+        textDecorationLine: 'line-through',
+        color: '#888',
+        marginRight: 5,
+    },
+    productPrice: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
 });
-
-export default App;
