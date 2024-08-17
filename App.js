@@ -1,148 +1,115 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
-import { Icon } from 'react-native-elements';
+import * as React from 'react';
+import { View, Text, Button, Image, TouchableOpacity, TouchableOpacityBase } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginPage from './LoginPage';
+import profilPage from './profilPage';
+import shopPage from './shoppage';
+import FavoritePage from './FavoritePage';
+import BagPage from './BagPage';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeAktif from './assets/home-activated.png';
+import HomeInaktif from './assets/home-inactive.png';
+import shopAktif from './assets/shop-activated.png';
+import shopInaktif from './assets/shop-inactive.png';
+import profilAktif from './assets/profil-activated.png';
+import profilInaktif from './assets/profil-inactive.png';
+import favoritesAktif from './assets/favorites-activated.png';
+import favoritesInaktif from './assets/favorites-inactive.png';
+import bagAktif from './assets/bag-activated.png';
+import bagInaktif from './assets/bag-inactive.png';
 
-const DATA = [
-    {
-        id: '1',
-        title: 'T-Shirt SPANISH',
-        price: '9$',
-        image: 'https://via.placeholder.com/150',
-        rating: 3,
-        brand: 'Mango',
-    },
-    {
-        id: '2',
-        title: 'Blouse',
-        price: '14$',
-        oldPrice: '21$',
-        discount: '-20%',
-        image: 'https://via.placeholder.com/150',
-        rating: 4,
-        brand: 'Dorothy Perkins',
-    },
-    {
-        id: '3',
-        title: 'Shirt',
-        price: '9$',
-        image: 'https://via.placeholder.com/150',
-        rating: 1,
-        brand: 'Mango',
-    },
-    {
-        id: '4',
-        title: 'Light Blouse',
-        price: '14$',
-        oldPrice: '21$',
-        discount: '-20%',
-        image: 'https://via.placeholder.com/150',
-        rating: 4,
-        brand: 'Dorothy Perkins',
-    },
-];
-
-const ProductItem = ({ item }) => (
-    <View style={styles.productItem}>
-        <Image source={{ uri: item.image }} style={styles.productImage} />
-        {item.discount && (
-            <View style={styles.discountBadge}>
-                <Text style={styles.discountText}>{item.discount}</Text>
-            </View>
-        )}
-        <Text style={styles.productTitle}>{item.title}</Text>
-        <Text style={styles.productBrand}>{item.brand}</Text>
-        <View style={styles.ratingContainer}>
-            {[...Array(5)].map((_, i) => (
-                <Icon
-                    key={i}
-                    name="star"
-                    type="font-awesome"
-                    size={12}
-                    color={i < item.rating ? '#ffd700' : '#ccc'}
-                />
-            ))}
-        </View>
-        <View style={styles.priceContainer}>
-            {item.oldPrice && <Text style={styles.oldPrice}>{item.oldPrice}</Text>}
-            <Text style={styles.productPrice}>{item.price}</Text>
-        </View>
-    </View>
-);
-
-export default function visual() {
-    return (
-        <View style={styles.container}>
-            <FlatList
-                data={DATA}
-                renderItem={({ item }) => <ProductItem item={item} />}
-                keyExtractor={item => item.id}
-                numColumns={2}
-                contentContainerStyle={styles.productList}
+const Tab = createBottomTabNavigator();
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerShown: false, tabBarIcon: ({ focused }) => (
+            <Image
+              source={focused ? HomeAktif : HomeInaktif}
+              style={{ width: 40, height: 40 }}
             />
-        </View>
-    );
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Shop"
+        component={shopPage}
+        options={{
+          headerShown: false, tabBarIcon: ({ focused }) => (
+            <Image
+              source={focused ? shopAktif : shopInaktif}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Favorite"
+        component={FavoritePage}
+        options={{
+          headerShown: false, tabBarIcon: ({ focused }) => (
+            <Image
+              source={focused ? favoritesAktif : favoritesInaktif}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Bag"
+        component={BagPage}
+        options={{
+          headerShown: false, tabBarIcon: ({ focused }) => (
+            <Image
+              source={focused ? bagAktif : bagInaktif}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profil"
+        component={profilPage}
+        options={{
+          headerShown: false, tabBarIcon: ({ focused }) => (
+            <Image
+              source={focused ? profilAktif : profilInaktif}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        padding: 10,
-    },
-    productList: {
-        justifyContent: 'space-between',
-    },
-    productItem: {
-        flex: 1,
-        margin: 5,
-        padding: 10,
-        backgroundColor: '#f9f9f9',
-        borderRadius: 8,
-        alignItems: 'center',
-    },
-    productImage: {
-        width: 120,
-        height: 120,
-        borderRadius: 8,
-        marginBottom: 10,
-    },
-    discountBadge: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
-        backgroundColor: '#f00',
-        padding: 5,
-        borderRadius: 5,
-    },
-    discountText: {
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-    productTitle: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    productBrand: {
-        fontSize: 12,
-        color: '#777',
-        marginBottom: 5,
-    },
-    ratingContainer: {
-        flexDirection: 'row',
-        marginBottom: 5,
-    },
-    priceContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    oldPrice: {
-        textDecorationLine: 'line-through',
-        color: '#888',
-        marginRight: 5,
-    },
-    productPrice: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-});
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+      <Button
+        title="Go to Login"
+        onPress={() => navigation.navigate('Login')}
+      />
+    </View>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={MyTabs} />
+        <Stack.Screen name="Login" component={LoginPage} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;

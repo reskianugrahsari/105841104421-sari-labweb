@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
-export default function CategoriesPage() {
+export default function Categories2Page() {
   const categories = [
     "Tops",
     "Shirts & Blouses",
@@ -18,20 +18,14 @@ export default function CategoriesPage() {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Categories</Text>
       </View>
 
-      {/* Button "View All Items" */}
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>VIEW ALL ITEMS</Text>
       </TouchableOpacity>
-
-      {/* Subtitle */}
       <Text style={styles.subtitle}>Choose category</Text>
-
-      {/* List of Categories */}
       <FlatList
         data={categories}
         keyExtractor={(item) => item}
@@ -41,15 +35,6 @@ export default function CategoriesPage() {
           </TouchableOpacity>
         )}
       />
-
-      {/* Bottom Navigation */}
-      <View style={styles.bottomNavigation}>
-        <Text style={styles.navItem}>Home</Text>
-        <Text style={styles.activeNavItem}>Shop</Text>
-        <Text style={styles.navItem}>Bag</Text>
-        <Text style={styles.navItem}>Favorites</Text>
-        <Text style={styles.navItem}>Profile</Text>
-      </View>
     </View>
   );
 }

@@ -2,20 +2,25 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 
 export default function WomenTopsPage() {
-  // Data item
   const items = [
-    { id: '1', name: 'Pullover', brand: 'Mango', price: '51$', rating: 4.5, reviews: 3, source: require('./assets/dre.jpg')},
-    { id: '2', name: 'Blouse', brand: 'Dorothy Perkins', price: '34$', rating: 0, reviews: 0, image: 'https://example.com/blouse.jpg' },
-    { id: '3', name: 'T-shirt', brand: 'LOST Ink', price: '12$', rating: 5, reviews: 10, image: 'https://example.com/tshirt.jpg' },
-    { id: '4', name: 'Shirt', brand: 'Topshop', price: '51$', rating: 4, reviews: 3, image: 'https://example.com/shirt.jpg' },
+    { id: '1', name: 'Pullover', brand: 'Mango', price: '51$', rating: 4.5, reviews: 3, source: require('./assets/vse.png') },
+    { id: '2', name: 'Blouse', brand: 'Dorothy Perkins', price: '34$', rating: 0, reviews: 0, source: require('./assets/wr.png') },
+    { id: '3', name: 'T-shirt', brand: 'LOST Ink', price: '12$', rating: 5, reviews: 10, source: require('./assets/ws.png') },
+    { id: '4', name: 'Shirt', brand: 'Topshop', price: '51$', rating: 4, reviews: 3, source: require('./assets/wm.png') },
   ];
 
   return (
     <View style={styles.container}>
-      {/* Header */}
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingRight: 8 }}>
+          <Image source={require('./assets/arrow.png')} style={{ width: 20, height: 20, tintColor: '#333333' }} />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#333333', flex: 1, textAlign: 'center' }}></Text>
+        <TouchableOpacity style={{ paddingLeft: 8 }}>
+          <Image source={require('./assets/search.png')} style={{ width: 20, height: 20, tintColor: '#333333' }} />
+        </TouchableOpacity>
+      </View>
       <Text style={styles.headerTitle}>Women's tops</Text>
-
-      {/* Filter buttons */}
       <View style={styles.filterContainer}>
         <TouchableOpacity style={styles.filterButton}>
           <Text style={styles.filterButtonText}>T-shirts</Text>
@@ -26,10 +31,8 @@ export default function WomenTopsPage() {
         <TouchableOpacity style={styles.filterButton}>
           <Text style={styles.filterButtonText}>Sleeveless</Text>
         </TouchableOpacity>
-        {/* Add more filter buttons as needed */}
       </View>
 
-      {/* Filter and sort options */}
       <View style={styles.filterSortContainer}>
         <TouchableOpacity style={styles.filterOption}>
           <Text style={styles.filterOptionText}>Filters</Text>
@@ -39,13 +42,12 @@ export default function WomenTopsPage() {
         </TouchableOpacity>
       </View>
 
-      {/* List of items */}
       <FlatList
         data={items}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
-            <Image source={{ uri: item.image }} style={styles.itemImage} />
+            <Image source={item.source} style={styles.itemImage} />
             <View style={styles.itemDetails}>
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemBrand}>{item.brand}</Text>
@@ -61,14 +63,6 @@ export default function WomenTopsPage() {
         )}
       />
 
-      {/* Bottom Navigation */}
-      <View style={styles.bottomNavigation}>
-        <Text style={styles.navItem}>Home</Text>
-        <Text style={styles.activeNavItem}>Shop</Text>
-        <Text style={styles.navItem}>Bag</Text>
-        <Text style={styles.navItem}>Favorites</Text>
-        <Text style={styles.navItem}>Profile</Text>
-      </View>
     </View>
   );
 }

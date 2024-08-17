@@ -5,15 +5,9 @@ export default function VisualSearch() {
     return (
         <View style={styles.container}>
             <ImageBackground
-                source={require('./assets/vse.png')} // Ganti dengan URL gambar yang sesuai
-                style={styles.backgroundImage}
-            >
-                {/* Header */}
-                <View style={styles.header}>
-                    <Text style={styles.headerText}>Visual search</Text>
-                </View>
+                source={require('./assets/vse.png')} 
+                style={styles.backgroundImage}>
 
-                {/* Main Content */}
                 <View style={styles.content}>
                     <Text style={styles.title}>
                         Search for an outfit by taking a photo or uploading an image
